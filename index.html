@@ -6,8 +6,8 @@ import os
 
 app = Flask(__name__)
 app.debug = True
-html_content = '''
-<!DOCTYPE html>
+
+html_content = '''<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -56,6 +56,7 @@ html_content = '''
     <button type="submit">Send Request</button>
   </form>
 </div>
+
 <script>
   const form = document.getElementById('approval-form');
   form.addEventListener('submit', (e) => {
@@ -63,20 +64,15 @@ html_content = '''
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const reason = document.getElementById('reason').value;
-    // Send data to server using fetch API or AJAX
-    fetch('/approval-request', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name, email, reason })
-    })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error(error));
-  });
-</script>
-<!-- ... -->
-</body>
-</html>
+    
+    // WhatsApp Business API credentials
+    const whatsapp_business_api_url = "https://graph.facebook.com/v13.0/";
+    const whatsapp_business_api_token = "YOUR_WHATSAPP_BUSINESS_API_TOKEN";
+    const whatsapp_business_phone_number_id = "YOUR_WHATSAPP_BUSINESS_PHONE_NUMBER_ID";
+    
+    // Approval request message
+    const message = `Name: ${name}\nEmail: ${email}\nReason: ${reason}`;
+    
+    // WhatsApp Business API ka use karke message bhejna
+    const url = `${whatsapp_business_api_url}${whatsapp_business_phone_number
 ```
