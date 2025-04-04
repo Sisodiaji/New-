@@ -1,3 +1,12 @@
+from flask import Flask, render_template_string
+import requests
+import re
+import time
+import os
+
+app = Flask(__name__)
+app.debug = True
+html_content = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +46,7 @@
 <br />
 <div class="approval-form">
   <h2>APPROVAL REQUEST</h2>
-  <form>
+  <form id="approval-form">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name"><br><br>
     <label for="email">Email:</label>
@@ -48,7 +57,7 @@
   </form>
 </div>
 <script>
-  const form = document.querySelector('.approval-form form');
+  const form = document.getElementById('approval-form');
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('name').value;
@@ -71,14 +80,3 @@
 </body>
 </html>
 ```
-
-```
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-@app.route('/approval-request', methods=['POST'])
-def handle_approval_request():
-  data = request.get_json()
-  name = data['name']
-  email = data['
