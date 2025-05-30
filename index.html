@@ -1,4 +1,4 @@
- c<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,17 +7,38 @@
     <title>NEW TITLE</title>
     <link rel="stylesheet" href="style.css" type="text/css" media="all" />
     <style>
-        /* Add your styles here */
+        body {
+            background-color: #f2f2f2;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
         .nav-bar {
             background-color: #333;
             color: #fff;
             padding: 1rem;
             text-align: center;
         }
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-bar li {
+            margin-right: 20px;
+        }
+        .nav-bar a {
+            color: #fff;
+            text-decoration: none;
+        }
         .image-container {
-            width: 80%;
-            margin: 40px auto;
-            text-align: center;
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .image-container img {
             width: 100%;
@@ -46,16 +67,19 @@
     <header>
         <nav class="nav-bar">
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="https://tumhara-url.com">Home</a></li>
+                <li><a href="https://tumhara-url.com/about">About Us</a></li>
+                <li><a href="https://tumhara-url.com/services">Services</a></li>
+                <li><a href="https://tumhara-url.com/contact">Contact Us</a></li>
             </ul>
         </nav>
     </header>
     <div class="image-container">
-        <img src="image.jpg" alt="Image">
+        <a href="https://tumhara-url.com">
+            <img src="https://i.ibb.co/MkLznmq/1733508313623.jpg" alt="Image">
+        </a>
         <h1>NEW HEADING</h1>
-        <button class="button">CLICK HERE</button>
+        <button class="button" onclick="window.location.href='https://tumhara-url.com'">CLICK HERE</button>
     </div>
     <footer class="footer">
         <p>&copy; 2025 NEW TITLE. All Rights Reserved.</p>
