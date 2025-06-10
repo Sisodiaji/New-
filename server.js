@@ -1,11 +1,36 @@
-<!DOCTYPE html>
+const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+let activeUsers = {}; // username: sessionID
+
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false }
+}));
+
+const credentials = {
+  wp:   {username: "RJ07KING", password: "RJ073344"},
+  emd:  {username: "RJ07KING", password: "RJ073344"},
+  post: {username: "RJ07KING", password: "RJ073344"}
+};
+
+// Serve the HTML page at root
+app.get('/', (req, res) => {
+  res.send(`<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content=" SONU ALL TOOLS - Premium Facebook and WhatsApp automation tools">
-    <meta name="keywords" content="Facebook tools, WhatsApp tools, token generator, S. S. J">
-    <title>🦋 TOOL PANEL🦋</title>
+    <meta name="description" content="MR SONU SING WEB PANEL - Premium Facebook and WhatsApp automation tools">
+    <meta name="keywords" content="Facebook tools, WhatsApp tools, token generator, MR DEVIL">
+    <title>🦋MR SONU SING WEB PANEL🦋</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -290,11 +315,11 @@
 <body>
     <nav>
         <div class="nav-left">
-            <a href="https://wa.me/917500170115" class="btn btn-whatsapp">
-                <i class="fab fa-whatsapp"></i> 𝗪𝗛𝗔𝗧𝗦𝗔𝗣𝗣 <small>(7500170115)</small>
+            <a href="https://wa.me/917451774544" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> 𝗪𝗛𝗔𝗧𝗦𝗔𝗣𝗣 <small>(7451774544)</small>
             </a>
         </div>
-        <div class="logo">🦋𝗦𝗢𝗡𝗨 𝗥𝗔𝗝𝗣𝗨𝗧🦋</div>
+        <div class="logo">🦋𝗠𝗥 𝗦𝗢𝗡𝗨 𝗦𝗜𝗡𝗚🦋</div>
         <div class="nav-right">
             <a href="https://www.facebook.com/share/1AkRQ3QdVb/" class="btn btn-facebook">
                 <i class="fab fa-facebook"></i> 𝗙𝗔𝗖𝗘𝗕𝗢𝗢𝗞
@@ -307,8 +332,8 @@
         </div>
         <ul class="nav-links" id="nav-menu">
             <li>
-                <a href="https://wa.me/919024870456" class="btn btn-whatsapp">
-                    <i class="fab fa-whatsapp"></i> 𝗪𝗛𝗔𝗧𝗦𝗔𝗣𝗣 <small>(9024870456)</small>
+                <a href="https://wa.me/917451774544" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> 𝗪𝗛𝗔𝗧𝗦𝗔𝗣𝗣 <small>(7451774544)</small>
                 </a>
             </li>
             <li>
@@ -336,12 +361,12 @@
                 <span class="status-value" id="dateValue"><span class="loading"></span>Loading...</span>
             </div>
         </div>
-        <h1 class="glowing-arrow">🦋𝗦𝗢𝗡𝗨 𝗪𝗘𝗕 🦋</h1>
+        <h1 class="glowing-arrow">🦋𝗠𝗥 𝗦𝗢𝗡𝗨 𝗦𝗜𝗡𝗚 𝗪𝗘𝗕 𝗣𝗔𝗡𝗘𝗟🦋</h1>
         <div class="service-grid">
             <!-- (1) WP Loader (Paid) -->
             <div class="service-card paid-tool" id="wp-card" style="background: linear-gradient(135deg, #ff007f 0%, #ff00ff 100%); cursor:auto;">
                 <i class="fab fa-whatsapp"></i>
-                <h2>(1) 🦋 WP LOADER <span style="color:yellow;">[PAID]</span>🦋</h2>
+                <h2>(1) 🦋 WHATSAPP LOADER <span style="color:yellow;">[PAID]</span>🦋</h2>
                 <p>WhatsApp Loader Tool for fast automation.</p>
                 <div class="payment-info">
                     <b>Price: ₹200/month</b><br>
@@ -355,8 +380,6 @@
                 </div>
                 <div id="wp-user-info" style="display:none;">
                     <span>Welcome, <span id="wp-name"></span></span><br>
-                    <span>First Login: <span id="wp-first-login"></span></span><br>
-                    <span id="wp-timer"></span><br>
                     <button class="open-btn" onclick="window.open('https://your-wp-loader-link.com','_blank')">Open Tool</button>
                     <button class="logout-btn" onclick="logoutTool('wp')">Logout</button>
                 </div>
@@ -364,43 +387,43 @@
             <!-- (2) GP UID Finder (Free) -->
             <div class="service-card" style="background: linear-gradient(135deg, #00bfff 0%, #00ff7f 100%);" onclick="window.open('https://your-gp-uid-finder-link.com','_blank')">
                 <i class="fa-solid fa-users"></i>
-                <h2>(2) 🦋 𝗚𝗣 𝗨𝗜𝗗 𝗙𝗜𝗡𝗗𝗘𝗥🦋</h2>
+                <h2>(2) 🦋 𝗚𝗥𝗢𝗨𝗣 𝗨𝗜𝗗 𝗙𝗜𝗡𝗗𝗘𝗥🦋</h2>
                 <p>Find group UIDs instantly using this tool.</p>
             </div>
             <!-- (3) Token Checker (Free) -->
             <div class="service-card" style="background: linear-gradient(135deg, #ff8c00 0%, #ffd700 100%);" onclick="window.open('https://your-token-checker-link.com','_blank')">
                 <i class="fa-solid fa-check"></i>
-                <h2>(3) 🦋 𝗧𝗢𝗞𝗘𝗡 𝗖𝗛𝗘𝗖𝗞𝗘𝗥🦋</h2>
+                <h2>(3) 🦋𝗧𝗢𝗞𝗘𝗡 𝗖𝗛𝗘𝗖𝗞𝗘𝗥🦋</h2>
                 <p>Check if your token is live or dead.</p>
             </div>
             <!-- (4) Convo Server (Free) -->
             <div class="service-card" style="background: linear-gradient(135deg, #9400d3 0%, #ff69b4 100%);" onclick="window.open('https://your-convo-server-link.com','_blank')">
                 <i class="fab fa-facebook-messenger"></i>
-                <h2>(4) 🦋 𝗖𝗢𝗡𝗩𝗢 𝗦𝗘𝗥𝗩𝗘𝗥🦋</h2>
+                <h2>(4) 🦋𝗙𝗔𝗖𝗘𝗕𝗢𝗢𝗞 𝗖𝗢𝗡𝗩𝗢 𝗦𝗘𝗥𝗩𝗘𝗥🦋</h2>
                 <p>Send messages using Facebook token.</p>
             </div>
             <!-- (5) Token Finder (Free) -->
             <div class="service-card" style="background: linear-gradient(135deg, #ff4500 0%, #ffa500 100%);" onclick="window.open('https://your-token-finder-link.com','_blank')">
                 <i class="fa-solid fa-key"></i>
-                <h2>(5) 🦋  𝗧𝗢𝗞𝗞𝗘𝗡 𝗙𝗜𝗡𝗗𝗘𝗥🦋</h2>
+                <h2>(5) 🦋 𝗙𝗕 𝗜𝗗 𝗧𝗢𝗞𝗞𝗘𝗡 𝗙𝗜𝗡𝗗𝗘𝗥🦋</h2>
                 <p>Find tokens easily with this tool.</p>
             </div>
             <!-- (6) Page Token Generator (Free) -->
             <div class="service-card" style="background: linear-gradient(135deg, #008080 0%, #00ffff 100%);" onclick="window.open('https://your-page-token-gen-link.com','_blank')">
                 <i class="fa-solid fa-file-export"></i>
-                <h2>(6) 🦋 𝗣𝗔𝗚𝗘 𝗧𝗢𝗞𝗘𝗡 𝗚𝗘𝗡𝗥𝗔𝗧𝗢𝗥🦋</h2>
+                <h2>(6) 🦋𝗙𝗕 𝗣𝗔𝗚𝗘 𝗧𝗢𝗞𝗘𝗡 𝗚𝗘𝗡𝗥𝗔𝗧𝗢𝗥🦋</h2>
                 <p>Generate page tokens for your Facebook pages.</p>
             </div>
             <!-- (7) Encode Tool (Free) -->
             <div class="service-card" style="background: linear-gradient(135deg, #8a2be2 0%, #ff00ff 100%);" onclick="window.open('https://your-encode-tool-link.com','_blank')">
                 <i class="fa-solid fa-lock"></i>
-                <h2>(7) 🦋 𝗘𝗡𝗖𝗢𝗗𝗘 𝗧𝗢𝗢𝗟🦋</h2>
+                <h2>(7) 🦋𝗖𝗢𝗗𝗘 𝗘𝗡𝗖𝗢𝗗𝗘 𝗧𝗢𝗢𝗟🦋</h2>
                 <p>Encode your data securely and fast.</p>
             </div>
             <!-- (8) Pair Code Generator (Free) -->
             <div class="service-card" style="background: linear-gradient(135deg, #ff6347 0%, #ffa500 100%);" onclick="window.open('https://your-paircode-gen-link.com','_blank')">
                 <i class="fa-solid fa-qrcode"></i>
-                <h2>(8) 🦋  𝗣𝗔𝗜𝗥 𝗖𝗢𝗗𝗘 𝗚𝗘𝗡𝗥𝗔𝗧𝗢𝗥🦋</h2>
+                <h2>(8) 🦋 𝗪𝗣 𝗣𝗔𝗜𝗥 𝗖𝗢𝗗𝗘 𝗚𝗘𝗡𝗥𝗔𝗧𝗢𝗥🦋</h2>
                 <p>Generate WhatsApp/Facebook pair codes easily.</p>
             </div>
             <!-- (9) End-to-End Extension ZIP (Paid) -->
@@ -420,6 +443,221 @@
                 </div>
                 <div id="emd-user-info" style="display:none;">
                     <span>Welcome, <span id="emd-name"></span></span><br>
-                    <span>First Login: <span id="emd-first-login"></span></span><br>
-                    <span id="emd-timer"></span><br>
-                    <a c
+                    <a class="download-btn" href="https://your-extension-link.com/extension.zip" download>
+                        <i class="fa fa-download"></i> Download ZIP
+                    </a>
+                    <button class="logout-btn" onclick="logoutTool('emd')">Logout</button>
+                </div>
+            </div>
+            <!-- (10) Convo Cookies Server (Free) -->
+            <div class="service-card" style="background: linear-gradient(135deg, #9932cc 0%, #ff69b4 100%);" onclick="window.open('https://your-cookies-server-link.com','_blank')">
+                <i class="fa-solid fa-cookie-bite"></i>
+                <h2>(10) 🦋𝗙𝗔𝗖𝗘𝗕𝗢𝗢𝗞 𝗖𝗢𝗡𝗩𝗢 𝗖𝗢𝗞𝗞𝗜𝗘𝗦 𝗦𝗘𝗥𝗩𝗘𝗥🦋</h2>
+                <p>Convo cookies server for secure automation.</p>
+            </div>
+            <!-- (11) Post & Comment Tool (Paid) -->
+            <div class="service-card paid-tool" id="post-card" style="background: linear-gradient(135deg, #ff1493 0%, #ff6347 100%); cursor:auto;">
+                <i class="fa-solid fa-comments"></i>
+                <h2>(11) 🦋POST AND COMMENT TOOL <span style="color:yellow;">[PAID]</span>🦋</h2>
+                <p>Post and comment on Facebook automatically with this tool.</p>
+                <div class="payment-info">
+                    <b>Price: ₹200/month</b><br>
+                    Pay via <b>PhonePe/UPI:</b> <span style="color:yellow;">8824391563@ibl</span>
+                </div>
+                <button class="unlock-btn" onclick="showLogin('post')">Unlock</button>
+                <div id="post-login" class="login-popup" style="display:none;">
+                    <input type="text" placeholder="Username" id="post-username"><br>
+                    <input type="password" placeholder="Password" id="post-password"><br>
+                    <button onclick="loginTool('post',30)">Login</button>
+                </div>
+                <div id="post-user-info" style="display:none;">
+                    <span>Welcome, <span id="post-name"></span></span><br>
+                    <button class="open-btn" onclick="window.open('https://your-post-comment-tool-link.com','_blank')">Open Tool</button>
+                    <button class="logout-btn" onclick="logoutTool('post')">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <p>☠️ 𝗧𝗛𝗜𝗦 𝗧𝗢𝗢𝗟 𝗠𝗔𝗗𝗘 𝗕𝗬 𝗠𝗥 𝗦𝗢𝗡𝗨 𝗦𝗜𝗡𝗚=𝟮𝟬𝟮𝟱☠️</p>
+            <p>🦋 𝗙𝗢𝗥 𝗔𝗡𝗬 𝗞𝗜𝗡𝗗 𝗛𝗘𝗟𝗣 𝗪𝗣 𝗡𝗢 𝗠𝗥 𝗦𝗢𝗡𝗨 🦋 <span style="color:yellow;">917451774544</span></p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/sonu.insiide" class="btn btn-facebook">
+                    <i class="fab fa-facebook"></i> 𝗙𝗔𝗖𝗘𝗕𝗢𝗢𝗞
+                </a>
+                <a href="https://wa.me/917451774544" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> 𝗪𝗛𝗔𝗧𝗦𝗔𝗣𝗣 <small>(7451774544)</small>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('active');
+        }
+        function showLogin(tool) {
+            document.getElementById(tool+'-login').style.display = 'block';
+        }
+        function loginTool(tool, validityDays) {
+            let username = document.getElementById(tool+'-username').value.trim();
+            let password = document.getElementById(tool+'-password').value.trim();
+
+            fetch('/api/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ tool, username, password })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(tool+'-login').style.display = 'none';
+                    document.getElementById(tool+'-user-info').style.display = 'block';
+                    document.getElementById(tool+'-name').innerText = username;
+                    document.querySelector('#'+tool+'-card .unlock-btn').style.display = 'none';
+                } else {
+                    alert(data.message || 'Login failed');
+                }
+            });
+        }
+        function logoutTool(tool) {
+            fetch('/api/logout', {
+                method: 'POST',
+                credentials: 'include'
+            }).then(() => {
+                document.getElementById(tool+'-user-info').style.display = 'none';
+                document.querySelector('#'+tool+'-card .unlock-btn').style.display = 'block';
+            });
+        }
+        window.addEventListener('DOMContentLoaded', function() {
+            calculateLivePing();
+            updateLiveTimeInIndia();
+            updateDateInIndia();
+            setInterval(calculateLivePing, 2000);
+            setInterval(updateLiveTimeInIndia, 1000);
+            setInterval(updateDateInIndia, 60000);
+            ['wp','emd','post'].forEach(function(tool) {
+                fetch('/api/session', {
+                    credentials: 'include'
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.loggedIn && data.tool === tool) {
+                        document.getElementById(tool+'-login').style.display = 'none';
+                        document.getElementById(tool+'-user-info').style.display = 'block';
+                        document.getElementById(tool+'-name').innerText = data.username;
+                        document.querySelector('#'+tool+'-card .unlock-btn').style.display = 'none';
+                    }
+                });
+            });
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+        });
+        function calculateLivePing() {
+            const pingElement = document.getElementById('pingValue');
+            const startTime = performance.now();
+            const img = new Image();
+            img.src = 'https://www.google.co.in/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png?t=' + Date.now();
+            img.onload = function() {
+                const endTime = performance.now();
+                const pingTime = Math.round(endTime - startTime);
+                pingElement.innerHTML = \`\${pingTime} <small>ms</small>\`;
+            };
+            img.onerror = function() {
+                pingElement.innerHTML = '<span style="color: var(--primary-color)">Error</span>';
+            };
+            setTimeout(() => {
+                if (!img.complete) {
+                    pingElement.innerHTML = '<span style="color: var(--primary-color)">Timeout</span>';
+                }
+            }, 5000);
+        }
+        function updateLiveTimeInIndia() {
+            const timeElement = document.getElementById('timeValue');
+            try {
+                const options = {
+                    timeZone: 'Asia/Kolkata',
+                    hour12: true,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                };
+                const formatter = new Intl.DateTimeFormat('en-IN', options);
+                const now = new Date();
+                const timeString = formatter.format(now);
+                timeElement.innerHTML = timeString + ' <span style="font-size:0.85em;color:yellow;">IST</span>';
+            } catch (e) {
+                timeElement.innerHTML = '<span style="color: var(--primary-color)">Error</span>';
+                console.error('Time formatting error:', e);
+            }
+        }
+        function updateDateInIndia() {
+            const dateElement = document.getElementById('dateValue');
+            try {
+                const options = {
+                    timeZone: 'Asia/Kolkata',
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                };
+                const formatter = new Intl.DateTimeFormat('en-IN', options);
+                const now = new Date();
+                const dateString = formatter.format(now);
+                dateElement.innerHTML = dateString;
+            } catch (e) {
+                dateElement.innerHTML = '<span style="color: var(--primary-color)">Error</span>';
+                console.error('Date formatting error:', e);
+            }
+        }
+        window.addEventListener('error', function(e) {
+            console.error('Page error:', e.error);
+        });
+    </script>
+</body>
+</html>
+`);
+});
+
+// API endpoints
+app.post('/api/login', (req, res) => {
+  const { tool, username, password } = req.body;
+  if (!credentials[tool] || username !== credentials[tool].username || password !== credentials[tool].password) {
+    return res.status(401).json({ success: false, message: 'Invalid credentials' });
+  }
+  if (activeUsers[username] && activeUsers[username] !== req.sessionID) {
+    return res.status(403).json({ success: false, message: 'User already logged in elsewhere' });
+  }
+  req.session.username = username;
+  req.session.tool = tool;
+  activeUsers[username] = req.sessionID;
+  res.json({ success: true });
+});
+
+app.get('/api/session', (req, res) => {
+  if (req.session.username && activeUsers[req.session.username] === req.sessionID) {
+    res.json({ loggedIn: true, username: req.session.username, tool: req.session.tool });
+  } else {
+    res.json({ loggedIn: false });
+  }
+});
+
+app.post('/api/logout', (req, res) => {
+  if (req.session.username) {
+    delete activeUsers[req.session.username];
+  }
+  req.session.destroy(() => {
+    res.json({ success: true });
+  });
+});
+
+app.listen(3000, () => console.log('Server running on http://localhost:3000'));
