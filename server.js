@@ -16,10 +16,9 @@ app.use(session({
 }));
 
 const credentials = {
-  wp:   {username: "RJ07KING", password: "RJ073344"},
-  emd:  {username: "RJ07KING", password: "RJ073344"},
-  post: {username: "RJ07KING", password: "RJ073344"}
-};
+  wp:   {username: "SONU143", password: "SISODIAJI"},
+  emd:  {username: "SONU143", password: "SISODIAJI"},
+  post: {username: "SONU143", password: "SISODIAJI"}};
 
 // Serve the HTML page at root
 app.get('/', (req, res) => {
