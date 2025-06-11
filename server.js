@@ -379,7 +379,7 @@ app.get('/', (req, res) => {
                 </div>
                 <div id="wp-user-info" style="display:none;">
                     <span>Welcome, <span id="wp-name"></span></span><br>
-                    <button class="open-btn" onclick="window.open('https://your-wp-loader-link.com','_blank')">Open Tool</button>
+                    <button class="open-btn" onclick="window.open('https://post-sar-4.onrender.com','_blank')">Open Tool</button>
                     <button class="logout-btn" onclick="logoutTool('wp')">Logout</button>
                 </div>
             </div>
